@@ -5,7 +5,6 @@ const client = new Discord.Client();
 module.exports = {
     name: 'help',
     description: 'Retrieves all available commands',
-    aliases: ['commands'],
     usage: '<command-name|page-name/number>',
     cooldown: 5,
     commandPages: ['admin', 'cooldown', 'aliases'],
@@ -83,7 +82,7 @@ module.exports = {
         // #endregion
 
         // #region Checking existing commands against provided arguments
-        const name = args[0].toLowerCase();
+        const name = args[0].replace(";", "").toLowerCase();
         const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
         if (name) {
@@ -122,17 +121,17 @@ module.exports = {
                     .setTimestamp()
                     .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
-                var discoveredCooldownARG = command.cooldown !== undefined ? command.cooldown + " seconds" : defaultCommandCooldown + " seconds (unset)";
-                var discoveredAliasesARG = command.aliases !== undefined ? command.aliases.join(', ') : "N/A";
+                var discoveredCooldownARG = command.cooldown !== undefined ? command.cooldown + " seconds" : undefined;
+                var discoveredAliasesARG = command.aliases !== undefined ? command.aliases.join(', ') : undefined;
                 var discoveredUsageARG = command.usage !== undefined ? prefix + command.name + " " + command.usage : prefix + command.name;
-                var discoveredAdminOnlyARG = command.adminOnly === true || command.adminOnly !== undefined ? "Restricted to **Admins**" : "Available for **All Users**";
+                var discoveredAdminOnlyARG = command.adminOnly === true || command.adminOnly !== undefined ? "Restricted to **Admins**" : undefined;
                 var discoveredPagesARG = command.commandPages !== undefined ? command.commandPages.join(", ") : undefined;
 
-                helpArgumentEmbed.addField("Accessibility", discoveredAdminOnlyARG);
+                if (discoveredAdminOnlyARG) helpArgumentEmbed.addField("Accessibility", discoveredAdminOnlyARG);
                 helpArgumentEmbed.addField("Description", command.description);
                 helpArgumentEmbed.addField("Usage", discoveredUsageARG);
-                helpArgumentEmbed.addField(`Aliases`, discoveredAliasesARG);
-                helpArgumentEmbed.addField("Cooldown", discoveredCooldownARG);
+                if (discoveredCooldownARG) helpArgumentEmbed.addField("Cooldown", discoveredCooldownARG);
+                if (discoveredAliasesARG) helpArgumentEmbed.addField(`Aliases`, discoveredAliasesARG);
                 if (discoveredPagesARG) helpArgumentEmbed.addField("Pages", discoveredPagesARG);
 
                 message.channel.send(helpArgumentEmbed);
