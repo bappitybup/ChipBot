@@ -12,6 +12,15 @@ module.exports = {
         const data = [];
         const { commands } = message.client;
 
+        // #region embed thumbnail grabber
+        var iconURL = "";
+        if (message.guild === null) {
+            iconURL = message.client.user.displayAvatarURL();
+        } else {
+            iconURL = message.guild.iconURL();
+        }
+        // #endregion
+
         // #region conditionalCommandList function
         function conditionalCommandList(embedVariable, commandAttribute, attributeBoolean, embedTitle = "Commands List") {
             embedVariable.setTitle(embedTitle);
@@ -42,15 +51,6 @@ module.exports = {
 
             });
             return embedVariable;
-        }
-        // #endregion
-
-        // #region embed thumbnail grabber
-        var iconURL = "";
-        if (message.guild === null) {
-            iconURL = message.client.user.displayAvatarURL();
-        } else {
-            iconURL = message.guild.iconURL();
         }
         // #endregion
 
