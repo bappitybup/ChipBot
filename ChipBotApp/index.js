@@ -2,7 +2,8 @@
 
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token, version, defaultCommandCooldown, adminRoles } = require('./config.json');
+const { token } = require('./config.json');
+const { prefix, version, defaultCommandCooldown, adminRoles } = require('./commandVars.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();

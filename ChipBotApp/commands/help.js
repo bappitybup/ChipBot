@@ -1,4 +1,4 @@
-const { prefix, defaultCommandCooldown, adminRoles, version } = require('../config.json');
+const { prefix, defaultCommandCooldown, adminRoles, version } = require('../commandVars.json');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 

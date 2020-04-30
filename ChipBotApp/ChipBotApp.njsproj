@@ -43,6 +43,7 @@
     <Content Include="commands\reload.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="commandVars.json" />
     <Content Include="config.json">
       <SubType>Code</SubType>
     </Content>
