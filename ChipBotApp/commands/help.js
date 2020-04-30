@@ -8,6 +8,7 @@ module.exports = {
     aliases: ['commands'],
     usage: '<command-name|page-name/number>',
     cooldown: 5,
+    commandPages: ['admin', 'cooldown', 'aliases'],
     execute(message, args) {
         const data = [];
         const { commands } = message.client;
@@ -75,7 +76,7 @@ module.exports = {
 
         // Executing the embed based on conditions
         if (!args.length) {
-            data.push(`You can send \`${prefix}help <command-name>\` to get info on a specific command!`);
+            data.push(`You can send \`${prefix}${this.name} ${this.usage}\` to get info on a specific command!`);
 
             return message.channel.send(data, helpEmbed, { split: true });
         }
@@ -87,7 +88,6 @@ module.exports = {
 
         if (name) {
             // #region Command List Pagination
-            var commandPages = ["admin", "cooldown", "aliases"];
             let conditionalEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setThumbnail(iconURL)
@@ -95,16 +95,16 @@ module.exports = {
                 .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
             if (name === "pages") {
-                return message.channel.send("**Help Pages:** "+commandPages.join(", "));
+                return message.channel.send("**Help Pages:** " + this.commandPages.join(", "));
             }
 
-            if (name === commandPages[0]) {
+            if (name === this.commandPages[0]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "adminOnly", true, "Admin Commands List");
                 return message.channel.send(conditionalEmbed);
-            } else if (name === commandPages[1]) {
+            } else if (name === this.commandPages[1]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "cooldown", undefined, "Commands with Cooldowns List");
                 return message.channel.send(conditionalEmbed);
-            } else if (name === commandPages[2]) {
+            } else if (name === this.commandPages[2]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "aliases", undefined, "Commands with Aliases List");
                 return message.channel.send(conditionalEmbed);
             }
@@ -126,12 +126,14 @@ module.exports = {
                 var discoveredAliasesARG = command.aliases !== undefined ? command.aliases.join(', ') : "N/A";
                 var discoveredUsageARG = command.usage !== undefined ? prefix + command.name + " " + command.usage : prefix + command.name;
                 var discoveredAdminOnlyARG = command.adminOnly === true || command.adminOnly !== undefined ? "Restricted to **Admins**" : "Available for **All Users**";
+                var discoveredPagesARG = command.commandPages !== undefined ? command.commandPages.join(", ") : undefined;
 
                 helpArgumentEmbed.addField("Accessibility", discoveredAdminOnlyARG);
                 helpArgumentEmbed.addField("Description", command.description);
                 helpArgumentEmbed.addField("Usage", discoveredUsageARG);
                 helpArgumentEmbed.addField(`Aliases`, discoveredAliasesARG);
                 helpArgumentEmbed.addField("Cooldown", discoveredCooldownARG);
+                if (discoveredPagesARG) helpArgumentEmbed.addField("Pages", discoveredPagesARG);
 
                 message.channel.send(helpArgumentEmbed);
                 // #endregion
