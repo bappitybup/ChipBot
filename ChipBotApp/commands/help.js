@@ -94,14 +94,20 @@ module.exports = {
                 .setTimestamp()
                 .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
+            if (name === "pages") {
+                return message.channel.send("**Help Pages:** "+commandPages.join(", "));
+            }
+
             if (name === commandPages[0]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "adminOnly", true, "Admin Commands List");
+                return message.channel.send(conditionalEmbed);
             } else if (name === commandPages[1]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "cooldown", undefined, "Commands with Cooldowns List");
+                return message.channel.send(conditionalEmbed);
             } else if (name === commandPages[2]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "aliases", undefined, "Commands with Aliases List");
+                return message.channel.send(conditionalEmbed);
             }
-            return message.channel.send(conditionalEmbed);
             // #endregion
 
             // #region Command Args Validation
