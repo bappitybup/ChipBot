@@ -97,7 +97,9 @@ module.exports = {
             if (name === commandPages[0]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "adminOnly", true, "Admin Commands List");
             } else if (name === commandPages[1]) {
-                conditionalEmbed = conditionalCommandList(conditionalEmbed, "cooldown", undefined, "Admin Commands List");
+                conditionalEmbed = conditionalCommandList(conditionalEmbed, "cooldown", undefined, "Commands with Cooldowns List");
+            } else if (name === commandPages[2]) {
+                conditionalEmbed = conditionalCommandList(conditionalEmbed, "aliases", undefined, "Commands with Aliases List");
             }
             return message.channel.send(conditionalEmbed);
             // #endregion
