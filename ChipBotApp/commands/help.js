@@ -12,6 +12,7 @@ module.exports = {
         const data = [];
         const { commands } = message.client;
 
+        // #region conditionalCommandList function
         function conditionalCommandList(embedVariable, commandAttribute, attributeBoolean, embedTitle = "Commands List") {
             embedVariable.setTitle(embedTitle);
             commands.forEach(function (value, key) {
@@ -42,13 +43,16 @@ module.exports = {
             });
             return embedVariable;
         }
+        // #endregion
 
+        // #region embed thumbnail grabber
         var iconURL = "";
         if (message.guild === null) {
             iconURL = message.client.user.displayAvatarURL();
         } else {
             iconURL = message.guild.iconURL();
         }
+        // #endregion
 
         // #region "Help" RichEmbed declaration and definition FORLOOP
         let helpEmbed = new Discord.MessageEmbed()
@@ -67,13 +71,11 @@ module.exports = {
         }
         // #endregion
 
-        // Checking existing commands against provided arguments
+        // #region Checking existing commands against provided arguments
         const name = args[0].toLowerCase();
         const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
         if (name) {
-
-
             // #region Command List Pagination
             if (name === "admin") {
                 let conditionalEmbed = new Discord.MessageEmbed()
@@ -116,5 +118,6 @@ module.exports = {
             }
             // #endregion
         }
+        // #endregion
     },
 };
