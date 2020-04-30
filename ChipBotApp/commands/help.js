@@ -37,8 +37,18 @@ module.exports = {
                         }
 
                     }
-                } else {
+                } else if (attributeBoolean === true) {
                     if (commandEval === true) {
+
+                        if (value.usage != null) {
+                            embedVariable.addField(prefix + value.name + " " + value.usage + discoveredCooldown, value.description);
+                        } else {
+                            embedVariable.addField(prefix + value.name + discoveredCooldown, value.description);
+                        }
+
+                    }
+                } else {
+                    if (commandEval !== undefined) {
 
                         if (value.usage != null) {
                             embedVariable.addField(prefix + value.name + " " + value.usage + discoveredCooldown, value.description);
@@ -77,17 +87,19 @@ module.exports = {
 
         if (name) {
             // #region Command List Pagination
+            var commandPages = ["admin", "cooldown", "aliases"];
             let conditionalEmbed = new Discord.MessageEmbed()
                 .setColor('#0099ff')
                 .setThumbnail(iconURL)
                 .setTimestamp()
                 .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
-            if (name === "admin") {
+            if (name === commandPages[0]) {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "adminOnly", true, "Admin Commands List");
-
-                return message.channel.send(conditionalEmbed);
+            } else if (name === commandPages[1]) {
+                conditionalEmbed = conditionalCommandList(conditionalEmbed, "cooldown", undefined, "Admin Commands List");
             }
+            return message.channel.send(conditionalEmbed);
             // #endregion
 
             // #region Command Args Validation
