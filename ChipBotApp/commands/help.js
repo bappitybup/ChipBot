@@ -77,13 +77,13 @@ module.exports = {
 
         if (name) {
             // #region Command List Pagination
-            if (name === "admin") {
-                let conditionalEmbed = new Discord.MessageEmbed()
-                    .setColor('#0099ff')
-                    .setThumbnail(iconURL)
-                    .setTimestamp()
-                    .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
+            let conditionalEmbed = new Discord.MessageEmbed()
+                .setColor('#0099ff')
+                .setThumbnail(iconURL)
+                .setTimestamp()
+                .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
+            if (name === "admin") {
                 conditionalEmbed = conditionalCommandList(conditionalEmbed, "adminOnly", true, "Admin Commands List");
 
                 return message.channel.send(conditionalEmbed);
