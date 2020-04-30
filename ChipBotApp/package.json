@@ -1,0 +1,12 @@
+{
+  "name": "chip-bot-app",
+  "version": "0.0.0",
+  "description": "ChipBotApp",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "discord.js": "^12.1.1"
+  }
+}
