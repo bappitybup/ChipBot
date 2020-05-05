@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "defaultCommandCooldown": 0,
-  "adminRoles": [ "Bronze Catto", "Catto Bottos" ],
+  "adminRoles": [ "Moddo Catto", "Catto Bottos" ],
   "prefix": ";"
 
 }
