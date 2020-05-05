@@ -1,6 +1,7 @@
 module.exports = {
     name: 'respam',
     usage: '<messsage-count>',
+    adminOnly: true,
     description: 'Throw me a number, I\'ll count backwards.',
     execute(message, args) {
         var deleteCount = parseInt(args[0]);
