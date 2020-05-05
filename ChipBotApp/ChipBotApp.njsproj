@@ -37,6 +37,7 @@
     <Content Include="commands\help.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="commands\respam.js" />
     <Content Include="commands\ping.js">
       <SubType>Code</SubType>
     </Content>
