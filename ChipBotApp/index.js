@@ -112,35 +112,36 @@ client.on('message', message => {
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
-    // If a message gains a reaction and it is uncached, fetch and cache the message
-    // You should account for any errors while fetching, it could return API errors if the resource is missing
+    // #region `Promise failure functions` code
     function failureCallback(error) {
         console.log(error);
     }
+    // #endregion
 
-    function successCallback(result) {
-        result.send(user.username + " used the alien emoji in <#512180368221274122>");
-    }
+    // #region `Promise success functions` code
     function guildSuccessCallback1(result1) {
         var certifiedRoleId = '537247680930381835';
         if (!result1.roles.cache.get(certifiedRoleId)) {
             result1.roles.add(certifiedRoleId);
+            console.log(user.username + " certified themselves");
         } else {
-            console.log("they already had it");
+            console.log(user.username+" tried to certify but had done it before");
         }
     }
+    // #endregion
 
+    // #region `Reaction detection` code
     if (reaction.message.channel.id === '512180368221274122') {
         if (reaction.message.id !== '641324300128878632') {
             if (reaction.emoji.identifier === "%F0%9F%91%BD") {
                 //var modChannel = client.channels.cache.get('550080151040294922');
                 //modChannel.send(user.username + " used the alien emoji in <#512180368221274122>");
                 reaction.message.guild.members.fetch(user.id).then(guildSuccessCallback1, failureCallback);
-                client.users.fetch('194069213600546816').then(successCallback, failureCallback);
                 reaction.remove();
             }
         }
     }
+    // #endregion
 });
 
 client.login(token);
