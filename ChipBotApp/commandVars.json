@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "defaultCommandCooldown": 0,
-  "maxDeletions": 10,
+  "maxDeletions": 50,
   "adminRoles": [ "Moddo Catto", "Catto Bottos" ],
   "prefix": ";"
 

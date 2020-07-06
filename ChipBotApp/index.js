@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const { token } = require('./config.json');
 const { prefix, version, defaultCommandCooldown, adminRoles } = require('./commandVars.json');
 
-const client = new Discord.Client();
+const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -68,7 +68,7 @@ client.on('message', message => {
 
     // #region `args: true/false` & `usage: '<test1> <test2>'` code
     if (command.args && !args.length) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
+        let reply = `<:x:705168468760199178> You didn't provide any arguments, ${message.author}!`;
 
         // #region `usage: '<test1> <test2>'` code
         if (command.usage) {
@@ -109,6 +109,30 @@ client.on('message', message => {
         message.reply('there was an error trying to execute that command!');
     }
 
+});
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    // If a message gains a reaction and it is uncached, fetch and cache the message
+    // You should account for any errors while fetching, it could return API errors if the resource is missing
+
+    function successCallback(result) {
+        result.send(user.username + " used the alien emoji in <#512180368221274122>");
+    }
+    function failureCallback(error) {
+        console.log(error);
+    }
+
+    if (reaction.message.partial) await reaction.message.fetch();
+    // Now the message has been cached and is fully available:
+    if (reaction.message.channel.id === '512180368221274122') {
+        if (reaction.message.id === '557521221521244160') {
+            if (reaction.emoji.identifier === "%F0%9F%91%BD") {
+                //var modChannel = client.channels.cache.get('550080151040294922');
+                //modChannel.send(user.username + " used the alien emoji in <#512180368221274122>");
+                client.users.fetch('194069213600546816').then(successCallback, failureCallback);
+            }
+        }
+    }
 });
 
 client.login(token);
