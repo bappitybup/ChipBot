@@ -26,6 +26,22 @@ client.once('ready', () => {
 
 client.on('message', message => {
 
+    if (message.mentions.members.first() == message.guild.members.cache.get("519138795652907030")) {
+        var arrayping = [
+            'what do you want <:chompNANI:541968735544672271>',
+            'what now',
+            'why',
+            'bruh',
+            'WHAT',
+            'WHAT DO YOU WANT <:chompNANI:541968735544672271> <:chompNANI:541968735544672271>',
+            'WHYYYYY <:chompNANI:541968735544672271>',
+            'Yes',
+            'BRUH',
+            'fite me irl mate',
+            'i\'ll spin your jaw',
+            'hello'];
+        message.channel.send(arrayping[Math.floor((Math.random() * 12))]);
+    }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);

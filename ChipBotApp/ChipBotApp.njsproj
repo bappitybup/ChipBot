@@ -38,6 +38,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="commands\mid.js" />
+    <Content Include="commands\8ball.js" />
     <Content Include="commands\respam.js" />
     <Content Include="commands\ping.js">
       <SubType>Code</SubType>

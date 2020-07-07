@@ -7,7 +7,10 @@ module.exports = {
     description: 'Retrieves all available commands',
     usage: '<command-name|page-name/number>',
     cooldown: 5,
-    commandPages: ['admin', 'cooldown', 'aliases'],
+    commandPages: [
+        ['admin', 'Admin Commands List', 'adminOnly', true],
+        ['cooldown', 'Commands with Cooldowns List', 'cooldown', undefined],
+        ['aliases', 'Commands with Aliases List', 'aliases', undefined]],
     execute(message, args) {
         const data = [];
         const { commands } = message.client;
@@ -94,19 +97,20 @@ module.exports = {
                 .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
             if (name === "pages") {
-                return message.channel.send("**Help Pages:** " + this.commandPages.join(", "));
+                var pagesFormatted = [];
+                for (var i = 0; i < this.commandPages.length; i++) {
+                    pagesFormatted.push(this.commandPages[i][0]);
+                }
+                return message.channel.send("**Help Pages:** " + pagesFormatted.join(", "));
             }
 
-            if (name === this.commandPages[0]) {
-                conditionalEmbed = conditionalCommandList(conditionalEmbed, "adminOnly", true, "Admin Commands List");
-                return message.channel.send(conditionalEmbed);
-            } else if (name === this.commandPages[1]) {
-                conditionalEmbed = conditionalCommandList(conditionalEmbed, "cooldown", undefined, "Commands with Cooldowns List");
-                return message.channel.send(conditionalEmbed);
-            } else if (name === this.commandPages[2]) {
-                conditionalEmbed = conditionalCommandList(conditionalEmbed, "aliases", undefined, "Commands with Aliases List");
-                return message.channel.send(conditionalEmbed);
+            for (var i = 0; i < this.commandPages.length; i++) {
+                if (name === this.commandPages[i][0]) {
+                    conditionalEmbed = conditionalCommandList(conditionalEmbed, this.commandPages[i][2], this.commandPages[i][3], this.commandPages[i][1]);
+                    break;
+                }
             }
+            return message.channel.send(conditionalEmbed);
             // #endregion
 
             // #region Command Args Validation
