@@ -14,6 +14,11 @@ module.exports = {
     execute(message, args) {
         const data = [];
         const { commands } = message.client;
+        var pagesFormatted = [];
+
+        for (var i = 0; i < this.commandPages.length; i++) {
+            pagesFormatted.push(this.commandPages[i][0]);
+        }
 
         // #region embed thumbnail grabber
         var iconURL = "";
@@ -97,25 +102,20 @@ module.exports = {
                 .setFooter('ChipBot Version ' + version, message.client.user.displayAvatarURL());
 
             if (name === "pages") {
-                var pagesFormatted = [];
-                for (var i = 0; i < this.commandPages.length; i++) {
-                    pagesFormatted.push(this.commandPages[i][0]);
-                }
                 return message.channel.send("**Help Pages:** " + pagesFormatted.join(", "));
             }
 
             for (var i = 0; i < this.commandPages.length; i++) {
                 if (name === this.commandPages[i][0]) {
                     conditionalEmbed = conditionalCommandList(conditionalEmbed, this.commandPages[i][2], this.commandPages[i][3], this.commandPages[i][1]);
-                    break;
+                    return message.channel.send(conditionalEmbed);
                 }
             }
-            return message.channel.send(conditionalEmbed);
             // #endregion
 
             // #region Command Args Validation
             if (!command) {
-                return message.reply('that\'s not a valid command!');
+                return message.reply('<:x:705168468760199178> That\'s not a valid command page!');
             } else if (command) {
                 // #region "Help ARGUMENT" RichEmbed declaration and definition
                 const helpArgumentEmbed = new Discord.MessageEmbed()
@@ -129,7 +129,7 @@ module.exports = {
                 var discoveredAliasesARG = command.aliases !== undefined ? command.aliases.join(', ') : undefined;
                 var discoveredUsageARG = command.usage !== undefined ? prefix + command.name + " " + command.usage : prefix + command.name;
                 var discoveredAdminOnlyARG = command.adminOnly === true || command.adminOnly !== undefined ? "Restricted to **Admins**" : undefined;
-                var discoveredPagesARG = command.commandPages !== undefined ? command.commandPages.join(", ") : undefined;
+                var discoveredPagesARG = command.commandPages !== undefined ? pagesFormatted.join(", ") : undefined;
 
                 if (discoveredAdminOnlyARG) helpArgumentEmbed.addField("Accessibility", discoveredAdminOnlyARG);
                 helpArgumentEmbed.addField("Description", command.description);

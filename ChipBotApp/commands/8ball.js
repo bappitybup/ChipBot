@@ -8,7 +8,7 @@ module.exports = {
             'Most likely',
             'My sources say no',
             'Signs point to yes',
-            'Don’t count on it',
+            'Don\'t count on it',
             'Ask again later',
             'Outlook not so good',
             'Yes',

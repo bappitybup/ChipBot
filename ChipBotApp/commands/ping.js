@@ -1,5 +1,6 @@
 module.exports = {
     name: 'ping',
+    adminOnly: true,
     usage: '<text>',
     description: 'Throw me one, I\'ll throw you one back',
     execute(message, args) {

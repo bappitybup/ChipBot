@@ -26,21 +26,10 @@ client.once('ready', () => {
 
 client.on('message', message => {
 
-    if (message.mentions.members.first() == message.guild.members.cache.get("519138795652907030")) {
+    if (message.mentions.members.first() == message.guild.members.cache.get("519138795652907030") && !message.author.bot) {
         var arrayping = [
-            'what do you want <:chompNANI:541968735544672271>',
-            'what now',
-            'why',
-            'bruh',
-            'WHAT',
-            'WHAT DO YOU WANT <:chompNANI:541968735544672271> <:chompNANI:541968735544672271>',
-            'WHYYYYY <:chompNANI:541968735544672271>',
-            'Yes',
-            'BRUH',
-            'fite me irl mate',
-            'i\'ll spin your jaw',
-            'hello'];
-        message.channel.send(arrayping[Math.floor((Math.random() * 12))]);
+            'stop pinging me >:('];
+        message.channel.send(arrayping[0]);
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
@@ -56,7 +45,7 @@ client.on('message', message => {
 
     // #region `guildOnly: true/false` code
     if (command.guildOnly && message.channel.type !== 'text') {
-        return message.reply('I can\'t execute that command inside DMs!');
+        return message.reply('<:x:705168468760199178> I can\'t execute that command inside DMs!');
     }
     // #endregion
 
