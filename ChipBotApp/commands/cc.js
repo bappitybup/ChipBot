@@ -29,5 +29,6 @@ module.exports = {
         } else {
             message.channel.send(args.join(" "));
         }
+        message.delete();
     },
 };
