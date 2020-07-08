@@ -3,7 +3,7 @@ module.exports = {
     adminOnly: true,
     args: true,
     usage: '<#channel> <text>',
-    description: 'Your intelligence is my own',
+    description: 'Your words are my own',
     execute(message, args) {
         var channel = undefined;
         if (args[0].includes("#")) {
@@ -22,12 +22,19 @@ module.exports = {
                 var mainargs = args;
                 mainargs.splice(0, 1);
                 mainargs = mainargs.join(" ");
-                channel.send(mainargs);
+                channel.startTyping(); 
+                setTimeout(function () { channel.send(args.join(" ")) }, 1000);
+                channel.stopTyping();
+
             } else {
-                message.channel.send(args.join(" "));
+                message.channel.startTyping(); 
+                setTimeout(function () { message.channel.send(args.join(" ")) }, 1000);
+                message.channel.stopTyping();
             }
         } else {
-            message.channel.send(args.join(" "));
+            message.channel.startTyping();
+            setTimeout(function () { message.channel.send(args.join(" ")) }, 3000);
+            message.channel.stopTyping();
         }
         message.delete();
     },

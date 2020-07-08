@@ -31,6 +31,7 @@
     <Content Include="commands\args-info.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="commands\cr.js" />
     <Content Include="commands\embedtest.js">
       <SubType>Code</SubType>
     </Content>

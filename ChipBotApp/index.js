@@ -27,9 +27,7 @@ client.once('ready', () => {
 client.on('message', message => {
 
     if (message.mentions.members.first() == message.guild.members.cache.get("519138795652907030") && !message.author.bot) {
-        var arrayping = [
-            'stop pinging me >:('];
-        message.channel.send(arrayping[0]);
+        message.react('541968735544672271');
     }
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
