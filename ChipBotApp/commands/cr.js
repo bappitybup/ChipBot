@@ -27,9 +27,17 @@ module.exports = {
             if (args.length >= 3) {
                 if (channel !== undefined) {
                     if (result1 !== undefined) {
-                        result1.react(reactionID);
+                        result1.react(reactionID).catch((error) => {
+                            console.error(error.message);
+                        });
                     }
 
+                }
+            } else {
+                if (result1 !== undefined) {
+                    result1.react(reactionID).catch((error) => {
+                        console.error(error.message);
+                    });
                 }
             }
         }
@@ -40,6 +48,13 @@ module.exports = {
 
         if (channel !== undefined) {
             channel.messages.fetch(args[1]).then(reactMessageSuccess, reactMessageFailure);
+        } else {
+            reactionID = args[1];
+            if (new RegExp("<:.*?:[0-9]{18}>").test(args[1])) {
+                reactionID = args[1].match(new RegExp("^.*\:([0-9]{18})>"))
+                reactionID = reactionID[1];
+            }
+            message.channel.messages.fetch(args[0]).then(reactMessageSuccess, reactMessageFailure);
         }
         message.delete();
     },

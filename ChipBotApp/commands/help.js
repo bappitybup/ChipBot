@@ -84,6 +84,8 @@ module.exports = {
         // Executing the embed based on conditions
         if (!args.length) {
             data.push(`You can send \`${prefix}${this.name} ${this.usage}\` to get info on a specific command!`);
+            var discoveredPagesARG = this.commandPages !== undefined ? pagesFormatted.join(", ") : undefined;
+            if (discoveredPagesARG) helpEmbed.addField("Pages", discoveredPagesARG);
 
             return message.channel.send(data, helpEmbed, { split: true });
         }
