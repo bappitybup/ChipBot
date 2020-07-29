@@ -25,7 +25,7 @@ client.once('ready', () => {
 // #region Main Code
 
 client.on('message', message => {
-    if (message.members != null) {
+    if (message.mentions.members != null) {
         if (message.mentions.members.first() == message.guild.members.cache.get("519138795652907030") && !message.author.bot) {
             var pingArray = [
                 "735157440898793552",
