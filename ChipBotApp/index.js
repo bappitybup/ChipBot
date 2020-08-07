@@ -149,19 +149,14 @@ client.on('messageReactionAdd', async (reaction, user) => {
     // #region `Promise success functions` code
     function guildSuccessCallback1(result1) {
         var certifiedRoleId = '537247680930381835';
-        for (var i = 0; i < certBannedUserIDs.length; i++) {
-            if (certBannedUserIDs[i] == user.id) {
-                console.log(user.username + " tried to certify but has an ongoing ROC");
-                break;
-            } else {
-                if (!result1.roles.cache.get(certifiedRoleId)) {
-                    result1.roles.add(certifiedRoleId);
-                    console.log(user.username + " certified themselves");
-                } else {
-                    console.log(user.username + " tried to certify but had done it before");
-                }
-            }
+
+        if (!result1.roles.cache.get(certifiedRoleId)) {
+            result1.roles.add(certifiedRoleId);
+            console.log(user.username + " certified themselves");
+        } else {
+            console.log(user.username + " tried to certify but had done it before");
         }
+
     }
     // #endregion
 
@@ -169,9 +164,18 @@ client.on('messageReactionAdd', async (reaction, user) => {
     if (reaction.message.channel.id === '512180368221274122') {
         if (reaction.message.id !== '641324300128878632') {
             if (reaction.emoji.identifier === "%F0%9F%91%BD") {
+                var onBanlist = false;
+                for (var i = 0; i < certBannedUserIDs.length; i++) {
+                    if (certBannedUserIDs[i] == user.id) {
+                        console.log(user.username + " tried to certify but has an ongoing ROC");
+                        onBanlist = true;
+                    }
+                }
                 //var modChannel = client.channels.cache.get('550080151040294922');
                 //modChannel.send(user.username + " used the alien emoji in <#512180368221274122>");
-                reaction.message.guild.members.fetch(user.id).then(guildSuccessCallback1, failureCallback);
+                if (onBanlist != true) {
+                    reaction.message.guild.members.fetch(user.id).then(guildSuccessCallback1, failureCallback);
+                }
                 reaction.remove();
             }
         }
