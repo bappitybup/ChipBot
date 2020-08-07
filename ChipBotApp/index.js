@@ -3,6 +3,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
+const { certBannedUserIDs } = require('./certBannedUsers.json');
 const { prefix, version, defaultCommandCooldown, adminRoles } = require('./commandVars.json');
 
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
@@ -148,11 +149,18 @@ client.on('messageReactionAdd', async (reaction, user) => {
     // #region `Promise success functions` code
     function guildSuccessCallback1(result1) {
         var certifiedRoleId = '537247680930381835';
-        if (!result1.roles.cache.get(certifiedRoleId)) {
-            result1.roles.add(certifiedRoleId);
-            console.log(user.username + " certified themselves");
-        } else {
-            console.log(user.username+" tried to certify but had done it before");
+        for (var i = 0; i < certBannedUserIDs.length; i++) {
+            if (certBannedUserIDs[i] == user.id) {
+                console.log(user.username + " tried to certify but has an ongoing ROC");
+                break;
+            } else {
+                if (!result1.roles.cache.get(certifiedRoleId)) {
+                    result1.roles.add(certifiedRoleId);
+                    console.log(user.username + " certified themselves");
+                } else {
+                    console.log(user.username + " tried to certify but had done it before");
+                }
+            }
         }
     }
     // #endregion

@@ -48,6 +48,7 @@
     <Content Include="commands\reload.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="certBannedUsers.json" />
     <Content Include="commandVars.json" />
     <Content Include="config.json">
       <SubType>Code</SubType>
